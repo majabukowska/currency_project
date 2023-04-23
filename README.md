@@ -16,6 +16,8 @@ quotations = int(os.environ.get('quotations'))
 
 Running server via comand line:
 
+pip install -r requirements.txt
+
  python3 app.py "2023-04-20" "USD" "10"
  
  And same thing as above with variables:
