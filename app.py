@@ -1,14 +1,19 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 import requests
 import logging
 import datetime
-import sys
 import os
+import sys
 app = Flask(__name__)
 
-date = os.environ.get('date')
-currency = os.environ.get('currency')
-quotations = int(os.environ.get('quotations'))
+
+#date = os.environ.get('date')
+#currency = os.environ.get('currency')
+#quotations = int(os.environ.get('quotations'))
+
+date = sys.argv[1]
+currency = sys.argv[2]
+quotations = int(sys.argv[3])
 
 @app.route('/')
 def start():
@@ -93,6 +98,6 @@ def get_major_diff():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
 
-#sudo dockebuild --network=host -t testowy:test .py
+#sudo dockebuild --network=host -t currency .py
 
-#sudo docker run -it -e date=2023-04-20 -e currency=EUR -e quotations=30 testowy:test python3 app.py
+#sudo docker run -it -e date=2023-04-20 -e currency=EUR -e quotations=30 currency python3 app.py
