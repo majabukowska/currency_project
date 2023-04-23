@@ -3,13 +3,12 @@ import requests
 import logging
 import datetime
 import sys
-
+import os
 app = Flask(__name__)
 
-date = sys.argv[1]
-currency = sys.argv[2]
-quotations = int(sys.argv[3])
-
+date = os.environ.get('date')
+currency = os.environ.get('currency')
+quotations = int(os.environ.get('quotations'))
 
 @app.route('/')
 def start():
@@ -92,4 +91,4 @@ def get_major_diff():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)
