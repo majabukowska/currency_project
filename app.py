@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 import requests
 import logging
 import datetime
@@ -15,10 +15,16 @@ date = sys.argv[1]
 currency = sys.argv[2]
 quotations = int(sys.argv[3])
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def start():
-    return 'start'
-
+    if request.method == "POST":
+        if request.form["submit"] == "Average exchange rate":
+            return redirect(url_for("avg_currency_rate"))
+        elif request.form["submit"] == "Max and min average value":
+            return redirect(url_for("get_min_max_avg"))
+        elif request.form["submit"] == "Major differences between the buy and ask rate":
+            return redirect(url_for("get_major_diff"))
+    return render_template("index.html")
 
 @app.route('/avg_rate', methods=['GET'])
 def avg_currency_rate():
