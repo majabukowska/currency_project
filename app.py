@@ -92,3 +92,7 @@ def get_major_diff():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
+
+#sudo dockebuild --network=host -t testowy:test .py
+
+#sudo docker run -it -e date=2023-04-20 -e currency=EUR -e quotations=30 testowy:test python3 app.py
