@@ -10,9 +10,12 @@ date = sys.argv[1]
 currency = sys.argv[2]
 quotations = int(sys.argv[3])
 
+
 @app.route('/')
 def start():
     return 'start'
+
+
 @app.route('/avg_rate', methods=['GET'])
 def avg_currency_rate():
 
@@ -21,7 +24,7 @@ def avg_currency_rate():
         raise Exception("Date is not set")
     else:
         try:
-            dateObject = datetime.datetime.strptime(date, date_format)
+            datetime.datetime.strptime(date, date_format)
         except ValueError:
             print("Incorrect data format, should be YYYY-MM-DD")
 
@@ -37,6 +40,7 @@ def avg_currency_rate():
         data = response.json()
         avg_currency_rate = data['rates'][0]['mid']
         return jsonify({'date': date, 'avg': avg_currency_rate})
+
 
 @app.route('/min_max', methods=['GET'])
 def get_min_max_avg():
@@ -65,6 +69,26 @@ def get_min_max_avg():
     return jsonify({'max_avg_value': max_avg['avg'], 'max_avg_date': max_avg['date'],
                     'min_avg_value': min_avg['avg'], 'min_avg_date': min_avg['date']})
 
+
+@app.route('/major_difference', methods=['GET'])
+def get_major_diff():
+    if currency is None:
+        raise Exception("Currency is not set")
+    if quotations is None:
+        raise Exception("Quotations are not set")
+
+    url = f"http://api.nbp.pl/api/exchangerates/rates/c/{currency}/last/{quotations}/?format=json"
+    response = requests.get(url)
+    data = response.json()['rates']
+
+    major_diff = 0.0
+    for day in data:
+        if 'ask' in day and 'bid' in day:
+            diff = abs(day['ask'] - day['bid'])
+            if diff > major_diff:
+                major_diff = diff
+
+    return jsonify({'major_difference': major_diff})
 
 
 if __name__ == '__main__':
