@@ -6,11 +6,17 @@ import os
 import sys
 app = Flask(__name__)
 
+# Uncomment to run via Docker
+# date = os.environ.get('date')
+# currency = os.environ.get('currency')
+# quotations = int(os.environ.get('quotations'))
 
-#date = os.environ.get('date')
-#currency = os.environ.get('currency')
-#quotations = int(os.environ.get('quotations'))
+# Uncomment to check tests
+# date = "2023-04-20"
+# currency = "USD"
+# quotations = "10"
 
+# Uncomment to run via python3 app.py + parameters
 date = sys.argv[1]
 currency = sys.argv[2]
 quotations = int(sys.argv[3])
