@@ -1,4 +1,4 @@
-# dynatrace
+# Currency Project
 
 Hello, this is my Backend oriented task (Python)
 
